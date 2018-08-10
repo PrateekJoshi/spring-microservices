@@ -12,7 +12,8 @@ import com.prateek.microservices.currencyconversionservice.CurrencyConversionBea
  *	REST client Feign.
  */
 //@FeignClient(name ="currency-exchange-service", url="localhost:8000" )
-@FeignClient(name ="currency-exchange-service")
+//@FeignClient(name ="currency-exchange-service")		//uncommnet if you want to use your app without Zuul API gateway
+@FeignClient(name = "netflix-zuul-api-gateway-server")  //route API calls through Zuul API gateway 
 /*
  * RibbonClient: A client side load balancer which will invoke one of the multiple instances of currency-exchange-service
  * based on load.
@@ -20,7 +21,8 @@ import com.prateek.microservices.currencyconversionservice.CurrencyConversionBea
 @RibbonClient(name="currency-exchange-service")
 public interface CurrencyExchangeServiceProxy {
 	
-	@GetMapping("/currency-exchange/from/{from}/to/{to}")
+	//@GetMapping("/currency-exchange/from/{from}/to/{to}") //uncommnet if you want to use your app without Zuul API gateway
+	@GetMapping("currency-exchange-service/currency-exchange/from/{from}/to/{to}") 
 	public CurrencyConversionBean retrieveExchangeValue(@PathVariable("from") String from, @PathVariable("to") String to);
 	
 	
